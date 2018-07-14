@@ -3,20 +3,61 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
-	
+	<!-- OLD SERVLET -->
 	<servlet>
-	<servlet-name>spring-dispatcher</servlet-name>
-	
-	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<servlet-name>spring-dispatcher</servlet-name>
+
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>WEB-INF/applicationContext.xml</param-value>
+		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>spring-dispatcher</servlet-name>
 		<url-pattern>*.html</url-pattern>
 	</servlet-mapping>
-	
+	<!-- //OLD SERVLET -->
 
+	<!-- LISTENER pour lien SPRING -->
+	<!-- Add Support for Spring -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>
+			org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
+	<!-- CONFIG JSF -->
+	<!-- Change to "Production" when you are ready to deploy -->
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Development</param-value>
+	</context-param>
+
+	<!-- Welcome page -->
+	<welcome-file-list>
+		<welcome-file>test-jsf.jsf</welcome-file>
+	</welcome-file-list>
+
+	<!-- JSF Mapping -->
+	<servlet>
+		<servlet-name>facesServlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>facesServlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>facesServlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	<!-- filtre d'encodage -->
 	<filter>
 		<filter-name>Force UTF8 Filter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -29,11 +70,11 @@
 			<param-value>UTF-8</param-value>
 		</init-param>
 	</filter>
-	
-		<filter-mapping>
+
+	<filter-mapping>
 		<filter-name>Force UTF8 Filter</filter-name>
 		<url-pattern>/</url-pattern>
 	</filter-mapping>
-	
-  
+
+
 </web-app>
